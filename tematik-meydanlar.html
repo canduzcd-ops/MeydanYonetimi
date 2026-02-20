@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tematik Meydanlar — İstanbul Meydan Yönetimi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --dark: #0D1117;
+    --dark2: #161C26;
+    --dark3: #1E2633;
+    --text: #E8E2D9;
+    --text-muted: #8A8078;
+    --border: rgba(201,169,110,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,169,110,0.08) 0%, transparent 70%),
+      linear-gradient(180deg, #0D1117 0%, #0a1520 100%);
+  }
+
+  /* İstanbul silueti — SVG inline */
+  .istanbul-silhouette {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    width: 100%;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  /* Boğaz köprüsü ışık efekti */
+  .bridge-glow {
+    position: absolute;
+    bottom: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(201,169,110,0.4), transparent);
+    filter: blur(4px);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--border);
+    padding: 6px 20px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    backdrop-filter: blur(10px);
+    background: rgba(201,169,110,0.05);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .hero-title span { color: var(--gold); font-weight: 600; }
+
+  .hero-subtitle {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 56px;
+  }
+
+  .hero-note {
+    font-size: 14px;
+    color: #A09890;
+    margin-top: -36px;
+    margin-bottom: 42px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 16px 44px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--gold);
+    transform: translateX(-101%);
+    transition: transform 0.3s ease;
+  }
+
+  .hero-cta:hover::before { transform: translateX(0); }
+  .hero-cta:hover { color: var(--dark); }
+  .hero-cta span { position: relative; z-index: 1; }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.4;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(180deg, transparent, var(--gold));
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  #content {
+    background: var(--dark2);
+  }
+
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 40px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 40px;
+    color: var(--text);
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 48px;
+  }
+
+  /* ─── METHODOLOGY ─── */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    margin-top: 48px;
+    border: 1px solid var(--border);
+  }
+
+  .method-card {
+    background: var(--dark3);
+    padding: 36px 32px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .method-card:hover { background: rgba(201,169,110,0.05); }
+
+  .method-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: rgba(201,169,110,0.15);
+    line-height: 1;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .method-card h3 {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .method-card p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-muted);
+  }
+
+  /* Puanlama Matrisi */
+  .matrix-wrapper {
+    margin-top: 64px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .matrix-header {
+    background: rgba(201,169,110,0.08);
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .matrix-header p {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .matrix-table th {
+    background: var(--dark3);
+    padding: 16px 24px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  .matrix-table td {
+    padding: 14px 24px;
+    border-bottom: 1px solid rgba(201,169,110,0.07);
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .matrix-table tr:last-child td { border-bottom: none; }
+  .matrix-table tr:hover td { background: rgba(201,169,110,0.03); color: var(--text); }
+
+  /* ─── SEPARATOR ─── */
+  .full-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ─── SQUARES TABLE ─── */
+  .yaka-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    margin-top: 56px;
+  }
+
+  .yaka-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .squares-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .squares-table thead th {
+    background: var(--dark3);
+    padding: 14px 20px;
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  .squares-table tbody td {
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(201,169,110,0.07);
+    vertical-align: top;
+    line-height: 1.6;
+    color: #B0A898;
+  }
+
+  .squares-table tbody tr:hover td { background: rgba(201,169,110,0.04); }
+
+  .square-name {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 15px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    margin: 2px 2px 2px 0;
+  }
+
+  .tag-main {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,169,110,0.08);
+    font-weight: 500;
+  }
+
+  .tag-sub {
+    border-color: rgba(201,169,110,0.3);
+    color: var(--text-muted);
+  }
+
+  .score-bar {
+    display: flex;
+    gap: 3px;
+    margin-top: 6px;
+  }
+
+  .score-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .score-dot.active { background: var(--gold); }
+
+  .note-cell {
+    font-size: 13px;
+    color: var(--text-muted);
+    max-width: 260px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.8; }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ HERO ═══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <!-- İstanbul Silueti SVG -->
+  <svg class="istanbul-silhouette" viewBox="0 0 1440 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path fill="#C9A96E" d="
+      M0,280 L30,280 L30,260 L50,260 L50,240 L70,240 L70,220 L75,200 L78,180 L80,170 L82,180 L85,200 L88,220 L88,240
+      L100,240 L100,250 L120,250 L120,240 L130,240 L130,220 L135,200 L137,185 L139,175 L141,170 L143,160 L145,155 L147,160
+      L149,155 L151,148 L153,155 L155,160 L157,165 L159,155 L161,148 L163,155 L165,160 L167,165 L169,160 L171,155 L173,165
+      L175,170 L175,185 L177,200 L180,220 L182,240 L190,240 L190,250 L220,250 L220,240 L230,240 L230,220 L232,210 L234,200
+      L240,180 L242,160 L244,140 L246,120 L248,110 L250,100 L252,90 L254,80 L256,90 L258,100 L260,110 L262,120 L264,140
+      L266,160 L268,180 L270,200 L272,210 L274,220 L276,240 L290,240 L290,250 L320,250 L320,240 L340,240 L340,220
+      L345,200 L350,190 L353,185 L356,190 L360,200 L363,220 L363,240
+      L390,240 L390,220 L392,200 L394,185 L396,170 L398,155 L400,145 L402,135 L404,125 L406,115 L408,108 L410,100
+      L412,108 L414,115 L416,108 L418,100 L420,95 L422,88 L424,95 L426,100 L428,108 L430,115 L432,108 L434,100
+      L436,108 L438,115 L440,125 L442,135 L444,145 L446,155 L448,170 L450,185 L452,200 L454,220 L456,240
+      L490,240 L490,250 L530,250 L530,240 L550,240 L550,220 L555,195 L558,175 L560,160 L562,145 L564,130 L566,118
+      L568,108 L570,100 L572,108 L574,118 L576,130 L578,145 L580,160 L582,175 L585,195 L588,220 L590,240
+      L620,240 L620,250 L660,250 L660,240 L680,240 L680,220 L682,200 L684,180 L686,170 L688,180 L690,200 L692,220 L694,240
+      L730,240 L730,250 L760,250 L760,240 L780,240 L780,220 L785,200 L788,185 L790,175 L792,165 L794,155 L796,148
+      L798,140 L800,135 L802,140 L804,148 L806,155 L808,165 L810,175 L812,185 L815,200 L818,220 L820,240
+      L850,240 L850,250 L880,250 L880,240 L900,240 L900,220 L902,200 L904,180 L906,160 L908,140 L910,125 L912,112
+      L914,100 L916,112 L918,125 L920,140 L922,160 L924,180 L926,200 L928,220 L930,240
+      L970,240 L970,250 L1010,250 L1010,240 L1020,240 L1020,220 L1025,200 L1028,185 L1030,175 L1032,185 L1035,200
+      L1038,220 L1040,240 L1060,240 L1060,250 L1100,250 L1100,240 L1120,240 L1120,220 L1125,200 L1130,185 L1133,175
+      L1136,165 L1138,158 L1140,150 L1142,158 L1144,165 L1146,175 L1149,185 L1152,200 L1155,220 L1158,240
+      L1200,240 L1200,250 L1240,250 L1240,240 L1260,240 L1260,220 L1262,200 L1264,180 L1266,170 L1268,180 L1270,200
+      L1272,220 L1274,240 L1310,240 L1310,250 L1340,250 L1340,240 L1360,240 L1360,220 L1365,200 L1368,185 L1370,175
+      L1372,185 L1375,200 L1378,220 L1380,240 L1410,240 L1410,250 L1440,250 L1440,300 L0,300 Z
+    "/>
+    <!-- Minareler -->
+    <rect fill="#C9A96E" x="248" y="60" width="4" height="30"/>
+    <ellipse fill="#C9A96E" cx="250" cy="58" rx="5" ry="12"/>
+    <rect fill="#C9A96E" x="264" y="60" width="4" height="30"/>
+    <ellipse fill="#C9A96E" cx="266" cy="58" rx="5" ry="12"/>
+
+    <rect fill="#C9A96E" x="408" y="72" width="4" height="30"/>
+    <ellipse fill="#C9A96E" cx="410" cy="70" rx="5" ry="14"/>
+    <rect fill="#C9A96E" x="424" y="68" width="4" height="34"/>
+    <ellipse fill="#C9A96E" cx="426" cy="66" rx="5" ry="14"/>
+
+    <rect fill="#C9A96E" x="568" y="75" width="4" height="28"/>
+    <ellipse fill="#C9A96E" cx="570" cy="73" rx="4" ry="10"/>
+
+    <!-- Boğaz Köprüsü -->
+    <line x1="700" y1="200" x2="850" y2="200" stroke="#C9A96E" stroke-width="1.5" opacity="0.6"/>
+    <line x1="720" y1="160" x2="720" y2="200" stroke="#C9A96E" stroke-width="1.5" opacity="0.6"/>
+    <line x1="830" y1="160" x2="830" y2="200" stroke="#C9A96E" stroke-width="1.5" opacity="0.6"/>
+    <path d="M700,200 Q775,185 850,200" fill="none" stroke="#C9A96E" stroke-width="1" opacity="0.5"/>
+    <!-- Kule detayları -->
+    <rect fill="#C9A96E" x="718" y="145" width="4" height="55" opacity="0.7"/>
+    <rect fill="#C9A96E" x="828" y="145" width="4" height="55" opacity="0.7"/>
+
+    <!-- Kıyı çizgisi -->
+    <path d="M0,270 Q200,255 400,262 Q600,270 800,260 Q1000,250 1200,258 Q1350,264 1440,260 L1440,280 L0,280 Z"
+          fill="rgba(201,169,110,0.15)"/>
+  </svg>
+
+  <div class="bridge-glow"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">İstanbul Büyükşehir Belediyesi</div>
+    <h1 class="hero-title">Meydan<br><span>Yönetimi</span></h1>
+    <p class="hero-subtitle">Tematik Meydanlar &mdash; Kategorize Çalışması</p>
+    <p class="hero-note">Henüz taslak müdürüm görsel istanbul gibi olmamış tabiki daha iyisini yaparım :)</p>
+    <a href="#content" class="hero-cta"><span>Çalışmayı İncele</span></a>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ CONTENT ═══ -->
+<div id="content">
+
+  <!-- AMAÇ & KAPSAM -->
+  <div class="section fade-in">
+    <p class="section-label">01 — Proje Özeti</p>
+    <h2 class="section-title">Tematik Meydan<br>Yönetimi Yaklaşımı</h2>
+    <div class="divider"></div>
+    <p style="font-size:15px; line-height:2; color:#A09890; max-width:720px;">
+      Standart ve rastgele etkinlik planlaması yerine, her meydanın demografik yapısına, fiziksel kapasitesine ve sosyokültürel kimliğine uygun "nokta atışı" temalar belirlenerek kaynak verimliliği maksimize edilmektedir. Bu yaklaşım; etkinlik bütçesinin doğru kitleye yönlendirilmesini, meydanların şehir hafızasındaki kimliğinin pekiştirilmesini ve katılım oranlarının sistematik biçimde artırılmasını hedeflemektedir.
+    </p>
+  </div>
+
+  <hr class="full-divider">
+
+  <!-- YÖNTEMBİLİM -->
+  <div class="section fade-in">
+    <p class="section-label">02 — Çalışma Yöntemi</p>
+    <h2 class="section-title">Eşleştirme Algoritması</h2>
+    <div class="divider"></div>
+    <p style="font-size:15px; line-height:2; color:#A09890; max-width:720px; margin-bottom: 0;">
+      Her meydan dört temel analiz adımından geçirilmekte; elde edilen puanlama matrisi üzerinden ana tema ve destekleyici tema belirlenmektedir. Sürecin sonunda yakalar arası coğrafi denge ve tema çakışması kontrolü yapılmaktadır.
+    </p>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <span class="method-number">01</span>
+        <h3>Meydan Profili</h3>
+        <p>Demografik yapı (yaş, gelir, göç), fiziksel doku (büyüklük, altyapı, çevre yapılar) ve mevcut kullanım alışkanlıkları veri olarak toplanır.</p>
+      </div>
+      <div class="method-card">
+        <span class="method-number">02</span>
+        <h3>Puanlama Matrisi</h3>
+        <p>Her tema, üç kritere göre 1-5 puan alır: Hedef Kitle Uyumu, Fiziksel Uygunluk ve Özgünlük/Rekabet dengesi.</p>
+      </div>
+      <div class="method-card">
+        <span class="method-number">03</span>
+        <h3>Tema Seçimi</h3>
+        <p>En yüksek toplam puana sahip tema ana tema; ikinci sıradaki destekleyici tema olarak atanır. Çakışma varsa alt temalarla farklılaştırılır.</p>
+      </div>
+      <div class="method-card">
+        <span class="method-number">04</span>
+        <h3>Denge Kontrolü</h3>
+        <p>Avrupa / Anadolu Yakası dengesi, tema dağılımı ve coğrafi erişilebilirlik kriterleri nihai kez değerlendirilir.</p>
+      </div>
+    </div>
+
+    <!-- Puanlama Matrisi -->
+    <div class="matrix-wrapper" style="margin-top:48px;">
+      <div class="matrix-header">
+        <p>Puanlama Kriterleri — 1 ile 5 arasında değerlendirme</p>
+      </div>
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Kriter</th>
+            <th>Açıklama</th>
+            <th>Ağırlık</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--text); font-weight:500;">Hedef Kitle Uyumu</td>
+            <td>O temayı talep edecek kitle meydanda fiziksel olarak mevcut mu?</td>
+            <td style="color:var(--gold);">%40</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text); font-weight:500;">Fiziksel Uygunluk</td>
+            <td>Meydanın altyapısı ve kapasitesi temayı taşıyabilir durumda mı?</td>
+            <td style="color:var(--gold);">%35</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text); font-weight:500;">Özgünlük / Rekabet</td>
+            <td>Yakın çevrede aynı tema başka bir meydana atanmış mı? Farklılaşma var mı?</td>
+            <td style="color:var(--gold);">%25</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr class="full-divider">
+
+  <!-- MEYDANLAR -->
+  <div class="section fade-in">
+    <p class="section-label">03 — Kategorize Sonuçlar</p>
+    <h2 class="section-title">Meydan Tema Atamaları</h2>
+    <div class="divider"></div>
+    <p style="font-size:14px; line-height:2; color:#A09890; max-width:680px;">
+      11 pilot meydan, algoritma çıktısına göre ana tema ve destekleyici temalarıyla aşağıda listelenmiştir. Her meydan için hedef kitle profili ve meydana özgü strateji notu sunulmaktadır.
+    </p>
+
+    <!-- ANADOLU YAKASI -->
+    <div class="yaka-label">Anadolu Yakası</div>
+
+    <table class="squares-table">
+      <thead>
+        <tr>
+          <th style="width:20%">Meydan</th>
+          <th style="width:22%">Ana Tema</th>
+          <th style="width:18%">Destekleyici Tema</th>
+          <th style="width:15%">Hedef Kitle</th>
+          <th style="width:10%">Uyum Skoru</th>
+          <th>Meydana Özel Not</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="square-name">Kartal Neyzen Tevfik Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">🎶 Müzik ve Sahne Sanatları</span>
+          </td>
+          <td><span class="tag tag-sub">Kültür ve Sanat</span></td>
+          <td>Geniş yaş yelpazesi, müzikseverler</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
+            </div>
+          </td>
+          <td class="note-cell">Neyzen Tevfik kimliğiyle güçlü tarihsel bağ. Sahne kurulumuna elverişli alan yapısı. Caz ve klasik müzik etkinlikleri için uygun.</td>
+        </tr>
+        <tr>
+          <td><span class="square-name">Maltepe Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">👨‍👩‍👧 Aile ve Çocuk</span>
+          </td>
+          <td><span class="tag tag-sub">Spor ve Sağlıklı Yaşam</span></td>
+          <td>Çekirdek aileler, 0–12 yaş grubu</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
+            </div>
+          </td>
+          <td class="note-cell">Sahil şeridine yakın konum, geniş açık alan. Yoğun aile nüfusu. Çocuk atölyeleri ve açık hava spor etkinlikleri öncelikli.</td>
+        </tr>
+        <tr>
+          <td><span class="square-name">Ümraniye 15 Temmuz Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">🏛️ Gönüllülük ve Sivil Katılım</span>
+          </td>
+          <td><span class="tag tag-sub">Tarih ve Miras</span></td>
+          <td>Tüm yaş grupları, sivil toplum</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
+            </div>
+          </td>
+          <td class="note-cell">15 Temmuz anısıyla güçlü anlam yüklü kimlik. Anma törenleri, şehitlik bilinci ve sivil dayanışma etkinlikleri için merkez niteliği taşımaktadır.</td>
+        </tr>
+        <tr>
+          <td><span class="square-name">Üsküdar Mimar Sinan Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">🎨 Kültür ve Sanat</span>
+          </td>
+          <td><span class="tag tag-sub">Tarih ve Miras</span></td>
+          <td>Kültür meraklıları, turistler, yetişkinler</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
+            </div>
+          </td>
+          <td class="note-cell">Osmanlı mimarisi, vapur iskelesi ve tarihi doku ile çevrilmiş eşsiz konum. Sergi, heykel ve açık hava sanat etkinlikleri için en yüksek potansiyele sahip meydan.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- AVRUPA YAKASI -->
+    <div class="yaka-label">Avrupa Yakası</div>
+
+    <table class="squares-table">
+      <thead>
+        <tr>
+          <th style="width:20%">Meydan</th>
+          <th style="width:22%">Ana Tema</th>
+          <th style="width:18%">Destekleyici Tema</th>
+          <th style="width:15%">Hedef Kitle</th>
+          <th style="width:10%">Uyum Skoru</th>
+          <th>Meydana Özel Not</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="square-name">Aksaray Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">🌍 Çok Kültürlülük ve Birlikte Yaşam</span>
+          </td>
+          <td><span class="tag tag-sub">Gastronomi ve Lezzet</span></td>
+          <td>Göçmen topluluklar, kozmopolit nüfus</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
+            </div>
+          </td>
+          <td class="note-cell">İstanbul'un en yoğun göçmen nüfusuna sahip noktası. Farklı kültürlerin bir araya geldiği sokak lezzetleri festivalleri ve kültürel diyalog etkinlikleri için stratejik konum.</td>
+        </tr>
+        <tr>
+          <td><span class="square-name">Beşiktaş Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">💡 Gençlik ve Teknoloji</span>
+          </td>
+          <td><span class="tag tag-sub">Girişimcilik ve İnovasyon</span></td>
+          <td>Genç profesyoneller, öğrenciler</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
+            </div>
+          </td>
+          <td class="note-cell">Üniversite aksı, dinamik genç nüfus ve yoğun ticari doku. Hackathon, startup buluşmaları ve teknoloji söyleşileri için ideal. Barbaros Meydanı ile tema sürekliliği sağlanmalı.</td>
+        </tr>
+        <tr>
+          <td><span class="square-name">Bağcılar Ebubekir Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">👨‍👩‍👧 Aile ve Çocuk</span>
+          </td>
+          <td><span class="tag tag-sub">Eğitim ve Kariyer</span></td>
+          <td>Çekirdek aileler, ilk ve orta öğretim çağı</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
+            </div>
+          </td>
+          <td class="note-cell">Yüksek doğum oranına sahip, genç nüfus yoğun ilçe. Çocuk atölyeleri, eğitici oyun alanları ve veli-öğretmen buluşmaları için belirleyici bir merkez konumu.</td>
+        </tr>
+        <tr>
+          <td><span class="square-name">Bakırköy Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">🏃 Spor ve Sağlıklı Yaşam</span>
+          </td>
+          <td><span class="tag tag-sub">Kadın ve Toplumsal Güçlenme</span></td>
+          <td>Aktif yetişkinler, kadın nüfusu</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
+            </div>
+          </td>
+          <td class="note-cell">Yüksek gelir profili, aktif yaşam talebi yüksek demografik yapı. Sahil koşu yollarıyla bütünleşik etkinlikler, yoga, pilates ve kadın sporculara yönelik organizasyonlar öncelikli.</td>
+        </tr>
+        <tr>
+          <td><span class="square-name">Fatih Beyazıt Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">🕌 Tarih ve Miras</span>
+          </td>
+          <td><span class="tag tag-sub">Edebiyat ve Şiir</span></td>
+          <td>Turistler, akademisyenler, kültür meraklıları</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
+            </div>
+          </td>
+          <td class="note-cell">İstanbul Üniversitesi, Kapalıçarşı ve tarihi doku ile kuşatılmış eşsiz alan. Osmanlı ve Cumhuriyet dönemi bellek çalışmaları, tarihi yürüyüşler ve akademik buluşmalar için ilk tercih.</td>
+        </tr>
+        <tr>
+          <td><span class="square-name">Şişli Mecidiyeköy Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">💼 Girişimcilik ve İnovasyon</span>
+          </td>
+          <td><span class="tag tag-sub">Dijital Dönüşüm ve Akıllı Şehir</span></td>
+          <td>İş dünyası, genç profesyoneller</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
+            </div>
+          </td>
+          <td class="note-cell">İstanbul'un iş ve finans merkezine yakın konum, yoğun ofis nüfusu. Kurumsal networking, akıllı şehir lansmanları ve inovasyon fuarları için yüksek görünürlük sağlar.</td>
+        </tr>
+        <tr>
+          <td><span class="square-name">Şirinevler Meydanı</span></td>
+          <td>
+            <span class="tag tag-main">🤝 Mahalle Kültürü ve Dayanışma</span>
+          </td>
+          <td><span class="tag tag-sub">Yerel Üretici ve Esnaf</span></td>
+          <td>Mahalle sakinleri, esnaf, orta yaş</td>
+          <td>
+            <div class="score-bar">
+              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
+            </div>
+          </td>
+          <td class="note-cell">Güçlü mahalle bağları ve esnaf kültürü. Köy pazarları, el emeği sergileri ve komşuluk buluşmaları aracılığıyla toplumsal bağın pekiştirilmesine en uygun meydan.</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>İstanbul Büyükşehir Belediyesi &mdash; Tematik Meydan Yönetimi Pilot Çalışması &mdash; 2026</p>
+</footer>
+
+<script>
+  // Smooth reveal on scroll
+  const els = document.querySelectorAll('.fade-in');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => io.observe(el));
+
+  // Hero CTA smooth scroll
+  document.querySelector('.hero-cta').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector('#content').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
