@@ -309,6 +309,123 @@
     margin-bottom: 32px;
     margin-top: 56px;
   }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .section {
+        padding: 60px 16px;
+        max-width: 100vw;
+      }
+      .divider {
+        margin-bottom: 32px;
+      }
+      .hero-title {
+        font-size: clamp(32px, 7vw, 56px);
+      }
+      .hero-subtitle, .hero-note {
+        font-size: 12px;
+        margin-bottom: 32px;
+      }
+      .hero-badge {
+        padding: 6px 12px;
+        font-size: 10px;
+        margin-bottom: 18px;
+      }
+      .hero-cta {
+        padding: 12px 24px;
+        font-size: 12px;
+      }
+      .scroll-indicator {
+        bottom: 16px;
+      }
+      .istanbul-silhouette {
+        height: 80px;
+      }
+      .bridge-glow {
+        width: 90vw;
+        left: 5vw;
+      }
+      .method-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .method-card {
+        padding: 24px 12px;
+      }
+      .matrix-header, .matrix-table th, .matrix-table td {
+        padding: 8px 8px;
+        font-size: 12px;
+      }
+      .matrix-table {
+        font-size: 12px;
+      }
+      .squares-table thead th, .squares-table tbody td {
+        padding: 8px 8px;
+        font-size: 11px;
+      }
+      .square-name {
+        font-size: 13px;
+      }
+      .note-cell {
+        max-width: 120px;
+        font-size: 11px;
+      }
+      footer {
+        padding: 24px 8px;
+      }
+      footer p {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title {
+        font-size: 28px;
+      }
+      .section-title {
+        font-size: 22px;
+      }
+      .section {
+        padding: 32px 6px;
+      }
+      .method-card {
+        padding: 12px 6px;
+      }
+      .matrix-header, .matrix-table th, .matrix-table td {
+        padding: 4px 4px;
+        font-size: 10px;
+      }
+      .squares-table thead th, .squares-table tbody td {
+        padding: 4px 4px;
+        font-size: 9px;
+      }
+      .square-name {
+        font-size: 11px;
+      }
+      .note-cell {
+        max-width: 80px;
+        font-size: 9px;
+      }
+      .hero-badge {
+        font-size: 9px;
+      }
+      .hero-cta {
+        font-size: 10px;
+        padding: 8px 12px;
+      }
+      .scroll-indicator {
+        bottom: 8px;
+      }
+      .istanbul-silhouette {
+        height: 40px;
+      }
+      .bridge-glow {
+        width: 98vw;
+        left: 1vw;
+      }
+      footer p {
+        font-size: 8px;
+      }
+    }
 
   .yaka-label::before {
     content: '';
@@ -494,11 +611,12 @@
   <div class="bridge-glow"></div>
 
   <div class="hero-content">
-    <div class="hero-badge">İstanbul Büyükşehir Belediyesi</div>
+     <!-- Removed the hero badge for İstanbul Büyükşehir Belediyesi -->
     <h1 class="hero-title">Meydan<br><span>Yönetimi</span></h1>
     <p class="hero-subtitle">Tematik Meydanlar &mdash; Kategorize Çalışması</p>
-    <p class="hero-note">Henüz taslak müdürüm görsel istanbul gibi olmamış tabiki daha iyisini yaparım :)</p>
-    <a href="#content" class="hero-cta"><span>Çalışmayı İncele</span></a>
+    <p class="hero-note"><v1 class="1"></v1></p>
+      <a href="#content" class="hero-cta" style="margin-top:32px;"><span>Çalışmayı İncele</span></a>
+  <!-- Removed the theme toggle button -->
   </div>
 
   <div class="scroll-indicator">
@@ -535,7 +653,27 @@
       <div class="method-card">
         <span class="method-number">01</span>
         <h3>Meydan Profili</h3>
-        <p>Demografik yapı (yaş, gelir, göç), fiziksel doku (büyüklük, altyapı, çevre yapılar) ve mevcut kullanım alışkanlıkları veri olarak toplanır.</p>
+        <p>Mevcut çalışmada genel şehir bilgisi ve mantıksal çıkarımdan yararlanılmıştır. Geliştirme sürecinde aşağıdaki gerçek veri kaynakları devreye alınması düşünülmektedir:</p>
+        <div style="margin-top:14px;">
+          <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:10px;">Resmi / Kurumsal</p>
+          <ul style="list-style:none; padding:0; margin-bottom:16px;">
+            <li style="font-size:13px; color:var(--text-muted); padding:5px 0; border-bottom:1px solid rgba(201,169,110,0.07); line-height:1.6;">TÜİK ADNKS — ilçe bazında yaş, cinsiyet, nüfus yoğunluğu</li>
+            <li style="font-size:13px; color:var(--text-muted); padding:5px 0; border-bottom:1px solid rgba(201,169,110,0.07); line-height:1.6;">İBB Açık Veri Portalı — mahalle bazında sosyoekonomik göstergeler, ulaşım</li>
+            <li style="font-size:13px; color:var(--text-muted); padding:5px 0; border-bottom:1px solid rgba(201,169,110,0.07); line-height:1.6;">Belediye Gelir İdaresi — esnaf ve işyeri yoğunluğu</li>
+            <li style="font-size:13px; color:var(--text-muted); padding:5px 0; line-height:1.6;">İl Göç İdaresi — ilçe bazında göçmen nüfus</li>
+          </ul>
+          <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:10px;">Saha / Gözlem</p>
+          <ul style="list-style:none; padding:0; margin-bottom:16px;">
+            <li style="font-size:13px; color:var(--text-muted); padding:5px 0; border-bottom:1px solid rgba(201,169,110,0.07); line-height:1.6;">Belediye ekiplerinin yerinde gözlem ve kullanıcı sayımı</li>
+            <li style="font-size:13px; color:var(--text-muted); padding:5px 0; border-bottom:1px solid rgba(201,169,110,0.07); line-height:1.6;">Çevre yapı kaydı (okul, üniversite, hastane, AVM — tapu ve ruhsat kayıtları)</li>
+            <li style="font-size:13px; color:var(--text-muted); padding:5px 0; line-height:1.6;">Geçmiş etkinlik katılım verileri (belediye arşivleri)</li>
+          </ul>
+          <p style="font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:10px;">Anket / Katılımcı</p>
+          <ul style="list-style:none; padding:0;">
+            <li style="font-size:13px; color:var(--text-muted); padding:5px 0; border-bottom:1px solid rgba(201,169,110,0.07); line-height:1.6;">Mahalle muhtarlıklarıyla kısa anketler</li>
+            <li style="font-size:13px; color:var(--text-muted); padding:5px 0; line-height:1.6;">Meydan kullanıcılarıyla yüz yüze veya QR tabanlı saha anketi</li>
+          </ul>
+        </div>
       </div>
       <div class="method-card">
         <span class="method-number">02</span>
@@ -605,70 +743,36 @@
     <table class="squares-table">
       <thead>
         <tr>
-          <th style="width:20%">Meydan</th>
-          <th style="width:22%">Ana Tema</th>
-          <th style="width:18%">Destekleyici Tema</th>
-          <th style="width:15%">Hedef Kitle</th>
-          <th style="width:10%">Uyum Skoru</th>
-          <th>Meydana Özel Not</th>
+          <th style="width:25%">Meydan</th>
+          <th style="width:30%">Ana Tema</th>
+          <th style="width:20%">Destekleyici Tema</th>
+          <th style="width:25%">Hedef Kitle</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><span class="square-name">Kartal Neyzen Tevfik Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">🎶 Müzik ve Sahne Sanatları</span>
-          </td>
+          <td><span class="tag tag-main">🎶 Müzik ve Sahne Sanatları</span></td>
           <td><span class="tag tag-sub">Kültür ve Sanat</span></td>
           <td>Geniş yaş yelpazesi, müzikseverler</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
-            </div>
-          </td>
-          <td class="note-cell">Neyzen Tevfik kimliğiyle güçlü tarihsel bağ. Sahne kurulumuna elverişli alan yapısı. Caz ve klasik müzik etkinlikleri için uygun.</td>
         </tr>
         <tr>
           <td><span class="square-name">Maltepe Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">👨‍👩‍👧 Aile ve Çocuk</span>
-          </td>
+          <td><span class="tag tag-main">👨‍👩‍👧 Aile ve Çocuk</span></td>
           <td><span class="tag tag-sub">Spor ve Sağlıklı Yaşam</span></td>
           <td>Çekirdek aileler, 0–12 yaş grubu</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
-            </div>
-          </td>
-          <td class="note-cell">Sahil şeridine yakın konum, geniş açık alan. Yoğun aile nüfusu. Çocuk atölyeleri ve açık hava spor etkinlikleri öncelikli.</td>
         </tr>
         <tr>
           <td><span class="square-name">Ümraniye 15 Temmuz Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">🏛️ Gönüllülük ve Sivil Katılım</span>
-          </td>
+          <td><span class="tag tag-main">🏛️ Gönüllülük ve Sivil Katılım</span></td>
           <td><span class="tag tag-sub">Tarih ve Miras</span></td>
           <td>Tüm yaş grupları, sivil toplum</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
-            </div>
-          </td>
-          <td class="note-cell">15 Temmuz anısıyla güçlü anlam yüklü kimlik. Anma törenleri, şehitlik bilinci ve sivil dayanışma etkinlikleri için merkez niteliği taşımaktadır.</td>
         </tr>
         <tr>
           <td><span class="square-name">Üsküdar Mimar Sinan Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">🎨 Kültür ve Sanat</span>
-          </td>
+          <td><span class="tag tag-main">🎨 Kültür ve Sanat</span></td>
           <td><span class="tag tag-sub">Tarih ve Miras</span></td>
           <td>Kültür meraklıları, turistler, yetişkinler</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
-            </div>
-          </td>
-          <td class="note-cell">Osmanlı mimarisi, vapur iskelesi ve tarihi doku ile çevrilmiş eşsiz konum. Sergi, heykel ve açık hava sanat etkinlikleri için en yüksek potansiyele sahip meydan.</td>
         </tr>
       </tbody>
     </table>
@@ -679,112 +783,54 @@
     <table class="squares-table">
       <thead>
         <tr>
-          <th style="width:20%">Meydan</th>
-          <th style="width:22%">Ana Tema</th>
-          <th style="width:18%">Destekleyici Tema</th>
-          <th style="width:15%">Hedef Kitle</th>
-          <th style="width:10%">Uyum Skoru</th>
-          <th>Meydana Özel Not</th>
+          <th style="width:25%">Meydan</th>
+          <th style="width:30%">Ana Tema</th>
+          <th style="width:20%">Destekleyici Tema</th>
+          <th style="width:25%">Hedef Kitle</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><span class="square-name">Aksaray Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">🌍 Çok Kültürlülük ve Birlikte Yaşam</span>
-          </td>
+          <td><span class="tag tag-main">🌍 Çok Kültürlülük ve Birlikte Yaşam</span></td>
           <td><span class="tag tag-sub">Gastronomi ve Lezzet</span></td>
           <td>Göçmen topluluklar, kozmopolit nüfus</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
-            </div>
-          </td>
-          <td class="note-cell">İstanbul'un en yoğun göçmen nüfusuna sahip noktası. Farklı kültürlerin bir araya geldiği sokak lezzetleri festivalleri ve kültürel diyalog etkinlikleri için stratejik konum.</td>
         </tr>
         <tr>
           <td><span class="square-name">Beşiktaş Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">💡 Gençlik ve Teknoloji</span>
-          </td>
+          <td><span class="tag tag-main">💡 Gençlik ve Teknoloji</span></td>
           <td><span class="tag tag-sub">Girişimcilik ve İnovasyon</span></td>
           <td>Genç profesyoneller, öğrenciler</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
-            </div>
-          </td>
-          <td class="note-cell">Üniversite aksı, dinamik genç nüfus ve yoğun ticari doku. Hackathon, startup buluşmaları ve teknoloji söyleşileri için ideal. Barbaros Meydanı ile tema sürekliliği sağlanmalı.</td>
         </tr>
         <tr>
           <td><span class="square-name">Bağcılar Ebubekir Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">👨‍👩‍👧 Aile ve Çocuk</span>
-          </td>
+          <td><span class="tag tag-main">👨‍👩‍👧 Aile ve Çocuk</span></td>
           <td><span class="tag tag-sub">Eğitim ve Kariyer</span></td>
           <td>Çekirdek aileler, ilk ve orta öğretim çağı</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
-            </div>
-          </td>
-          <td class="note-cell">Yüksek doğum oranına sahip, genç nüfus yoğun ilçe. Çocuk atölyeleri, eğitici oyun alanları ve veli-öğretmen buluşmaları için belirleyici bir merkez konumu.</td>
         </tr>
         <tr>
           <td><span class="square-name">Bakırköy Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">🏃 Spor ve Sağlıklı Yaşam</span>
-          </td>
+          <td><span class="tag tag-main">🏃 Spor ve Sağlıklı Yaşam</span></td>
           <td><span class="tag tag-sub">Kadın ve Toplumsal Güçlenme</span></td>
           <td>Aktif yetişkinler, kadın nüfusu</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
-            </div>
-          </td>
-          <td class="note-cell">Yüksek gelir profili, aktif yaşam talebi yüksek demografik yapı. Sahil koşu yollarıyla bütünleşik etkinlikler, yoga, pilates ve kadın sporculara yönelik organizasyonlar öncelikli.</td>
         </tr>
         <tr>
           <td><span class="square-name">Fatih Beyazıt Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">🕌 Tarih ve Miras</span>
-          </td>
+          <td><span class="tag tag-main">🕌 Tarih ve Miras</span></td>
           <td><span class="tag tag-sub">Edebiyat ve Şiir</span></td>
           <td>Turistler, akademisyenler, kültür meraklıları</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div>
-            </div>
-          </td>
-          <td class="note-cell">İstanbul Üniversitesi, Kapalıçarşı ve tarihi doku ile kuşatılmış eşsiz alan. Osmanlı ve Cumhuriyet dönemi bellek çalışmaları, tarihi yürüyüşler ve akademik buluşmalar için ilk tercih.</td>
         </tr>
         <tr>
           <td><span class="square-name">Şişli Mecidiyeköy Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">💼 Girişimcilik ve İnovasyon</span>
-          </td>
+          <td><span class="tag tag-main">💼 Girişimcilik ve İnovasyon</span></td>
           <td><span class="tag tag-sub">Dijital Dönüşüm ve Akıllı Şehir</span></td>
           <td>İş dünyası, genç profesyoneller</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
-            </div>
-          </td>
-          <td class="note-cell">İstanbul'un iş ve finans merkezine yakın konum, yoğun ofis nüfusu. Kurumsal networking, akıllı şehir lansmanları ve inovasyon fuarları için yüksek görünürlük sağlar.</td>
         </tr>
         <tr>
           <td><span class="square-name">Şirinevler Meydanı</span></td>
-          <td>
-            <span class="tag tag-main">🤝 Mahalle Kültürü ve Dayanışma</span>
-          </td>
+          <td><span class="tag tag-main">🤝 Mahalle Kültürü ve Dayanışma</span></td>
           <td><span class="tag tag-sub">Yerel Üretici ve Esnaf</span></td>
           <td>Mahalle sakinleri, esnaf, orta yaş</td>
-          <td>
-            <div class="score-bar">
-              <div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot active"></div><div class="score-dot"></div>
-            </div>
-          </td>
-          <td class="note-cell">Güçlü mahalle bağları ve esnaf kültürü. Köy pazarları, el emeği sergileri ve komşuluk buluşmaları aracılığıyla toplumsal bağın pekiştirilmesine en uygun meydan.</td>
         </tr>
       </tbody>
     </table>
@@ -816,6 +862,8 @@
     e.preventDefault();
     document.querySelector('#content').scrollIntoView({ behavior: 'smooth' });
   });
+  
+    // Removed the theme toggle functionality
 </script>
 
 </body>
